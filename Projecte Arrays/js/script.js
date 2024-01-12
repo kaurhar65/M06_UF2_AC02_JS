@@ -1,100 +1,60 @@
-			
-
 //Declaracion de variables globales
-let dades;
-let pokemonsNoms = [];
-let municipisNoms = [];
-let meteoritesNoms = [];
-let moviesNoms = [];
+let pokemons = [];
+let municipis = [];
+let meteorites = [];
+let movies = [];
+let filaInfo = [];
 
 // POKEMONS
-function datosPokemon(){
-	fetch("js/data/pokemon.json")
-	.then((response) => response.json())
-	.then((data) => {
-		dades = data.pokemon;		
-
-		
-		for(let i= 0; i<dades.length; i++){
-			let pokemonNuevo = dades[i];
-			let nombre = pokemonNuevo.name;
-			console.log(i + " " + nombre);
-			pokemonsNoms.push(nombre);
-		};
-		
-		console.table(pokemonsNoms);
-		// console.log("Array con los nombre de los pokemons: " + "br" + pokemonsNoms);
-		//--> esto imprime todos los datos de pokemon.
-		// console.log(dades) 
-		// console.log(dades[0].name)
-		// console.log(dades[0]);
-
-	});
-}
-
-// MUNICIPIS
-function datosMunicipis(){
-	fetch("js/data/municipis.json")
-	.then((response) => response.json())
-	.then((data) => {
-		dades = data.elements;		
-
-		
-		for(let i= 0; i<dades.length; i++){
-			let municipi = dades[i];
-			let nom = municipi.municipi_nom;
-			console.log(i + " " + nom);
-			municipisNoms.push(nom);
-		}
-		console.table(municipisNoms);
-		
-		// console.log(dades)
-		// console.log(dades[0].municipi_nom)
-	});
-
-}
-
-// METEORITS
-function datosMeteorites() {
-  fetch("js/data/earthMeteorites.json")
+function imprimirTot() {
+  fetch("js/data/pokemon.json")
     .then((response) => response.json())
     .then((data) => {
-      dades = data;
+      pokemons = data.pokemon;
 
-	  
-	  for(let i=0; i<dades.length; i++){
-		let meteorite = dades[i];
-		let nomMeteorite = meteorite.name;
-		console.log( i + " " + nomMeteorite);
-		meteoritesNoms.push(nomMeteorite);
-	  }
-	  console.table(meteoritesNoms);
-    //   console.log(dades);
-    //   console.log(dades[0].name);
+      //Fetch de municipis
+      fetch("js/data/municipis.json")
+        .then((response) => response.json())
+        .then((data) => {
+          municipis = data.elements;
+
+          //Fetch de meteorits
+          fetch("js/data/earthMeteorites.json")
+            .then((response) => response.json())
+            .then((data) => {
+              meteorites = data;
+
+              //Fetch de movies
+              fetch("js/data/movies.json")
+                .then((response) => response.json())
+                .then((data) => {
+                  movies = data.movies;
+
+                  let cargarDades = [];
+                  for (let i = 0; i < 1000; i++) {
+                    let singlePoke =
+                      i < pokemons.length ? pokemons[i].name : "-";
+                    let singleMunicipi =
+                      i < municipis.length ? municipis[i].municipi_nom : "-";
+                    let singleMovie = i < movies.length ? movies[i].title : "-";
+                    let singleMeteorit = 
+					i < meteorites.length ? meteorites[i].name : "-";
+                    filaInfo = {
+                      "Pokemon": singlePoke,
+                      "Municipis": singleMunicipi,
+                      "Pel·lícules": singleMovie,
+                      "EarthMeteorite": singleMeteorit,
+                    };
+                    cargarDades.push(filaInfo);
+                  }
+                  console.table(cargarDades);
+                });
+            });
+        });
     });
 }
 
+//longitud:1000 y crear una array de objectos la clave titulo y valor onstorage.
+//poner cada fetch en el then anterior.
 
-// MOVIES
-function datosMovies() {
-  fetch("js/data/movies.json")
-    .then((response) => response.json())
-    .then((data) => {
-      dades = data.movies;
-
-	  
-	  for(let i=0; i<dades.length; i++){
-		let movie = dades[i];
-		let nomMovie = movie.title;
-		console.log(i + " " + nomMovie);
-		moviesNoms.push(nomMovie);
-	  }
-	  console.table(moviesNoms);
-
-    //   console.log(dades);
-    //   console.log(dades[0].title);
-    });
-}
-
-
-
+//if la i < longitug.lenght pones el nombre, sino un guón
