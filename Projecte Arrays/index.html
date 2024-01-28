@@ -7,19 +7,19 @@
 	<title>Document</title>
 </head>
 <body>
-	<div id="resultat"></div>
 	<script src="js/script.js"></script>
-	<button onclick="imprimirTot()"> ImprimirTodo </button>
-	<br>
-	<button onclick="datosMunicipis()"> NomMunicipis </button>
-	<br>
-	<button onclick="datosMovies()"> NomMovies </button>
-	<br>
-	<button onclick="datosMeteorites()"> NomMeteorites </button>
-	<!-- <button onclick=""> Tot de nou </button>
-	<button onclick=""> Ascendent </button>
-	<button onclick=""> Descendent </button>
-	<button onclick=""> Buscar </button>
-	<button onclick=""> Mitjana </button> -->
+	<button onclick= "reload()"> Restart </button>
+	<select id="tipoLista" onchange="valorLista(this.value)">
+		<option value="select" selected>Select</option>
+		<option value="pokemon" >Pokemon</option>
+		<option value="municipi">Municipi</option>
+		<option value="pelicules">Pelicules</option>
+		<option value="meteorits">Meteorits</option>
+	</select>	
+	<button onclick= "orderList(this.value)" value="asc"> AscPokemons </button>
+	<button onclick= "orderList(this.value)" value="desc"> DescPokemons </button>
+	<div id="table"></div>
+
+	
 </body>
 </html>
